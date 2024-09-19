@@ -1,0 +1,39 @@
+<% layout("/layouts/boilerplate") %>
+<h1>Book a Mentor Session</h1>
+
+<h2>Mentors:</h2>
+<ul>
+    <% listings.forEach(listing => { %>
+        <li>
+            <img src="<%= listing.image %>" alt="<%= listing.name %>" width="100">
+            <h3><%= listing.name %></h3>
+            <p><%= listing.bio %></p>
+            
+            <!-- Book Session Form -->
+            <form method="POST" action="/sessions">
+                <input type="hidden" name="listingId" value="<%= listing._id %>">
+                <label for="dateTime">Select Date and Time:</label>
+                <input type="datetime-local" name="dateTime" required />
+                <button type="submit">Book Session</button>
+            </form>
+
+            <h4>Leave a Review:</h4>
+            <form method="POST" action="/reviews">
+                <input type="hidden" name="listingId" value="<%= listing._id %>">
+                <label for="author">Your Name:</label>
+                <input type="text" name="author" required />
+                <label for="text">Review:</label>
+                <input type="text" name="text" required />
+                <label for="rating">Rating:</label>
+                <select name="rating" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <button type="submit">Submit Review</button>
+            </form>
+        </li>
+    <% }); %>
+</ul>
